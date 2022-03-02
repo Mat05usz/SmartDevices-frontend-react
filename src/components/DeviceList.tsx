@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Device from "./Device";
 
-export default function DeviceList() {
+interface DeviceListProps{
+    setDeviceClicked : Dispatch<SetStateAction<SmartDevice>>
+}
+
+export default function DeviceList(deviceListProps : DeviceListProps) {
   const [devices, setDevices] = useState<SmartDevice[]>([
     {
       name: "Lightbulb",
@@ -32,7 +36,7 @@ export default function DeviceList() {
   return (
     <>
       {devices.map((device, index) => {
-        return <Device {...device} key={index}/>;
+        return <Device device={device} setDeviceClicked={deviceListProps.setDeviceClicked} key={index}/>;
       })}
     </>
   );

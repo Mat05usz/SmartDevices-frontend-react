@@ -1,13 +1,18 @@
-export default function Device(device: SmartDevice){
+import { Dispatch, SetStateAction } from "react";
 
-    Object.entries(device).map((entry) => {
-        console.log(entry[1]);
-    })
+interface DeviceProps {
+    device: SmartDevice,
+    setDeviceClicked : Dispatch<SetStateAction<SmartDevice>>
+}
+
+export default function Device(deviceProps: DeviceProps){
+
+    const {device, setDeviceClicked} = deviceProps;
 
     return(
         <>
         <div className="device-wrapper" onClick={(e) => {
-            window.open("", "", "width=600, height=400, left=200, top=200");
+            setDeviceClicked(device);
         }}>
             {
                 Object.entries(device).map((entry, index) => {
