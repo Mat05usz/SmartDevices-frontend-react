@@ -1,17 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-interface DeviceData {
+
+/* Base class for all SmartDevices */
+class DeviceData {
   type: DeviceTypes;
   id: string;
   name: string;
   connectionState: DeviceConnectionStates;
-  getFields(): string[][];
+
+    constructor(type: DeviceTypes, params: DeviceParams)
+    {
+        this.type = type;
+        this.id = params[0];
+        this.name = params[1];
+        this.connectionState = params[2];
+    }
+
+  getFields(): string[][] {return};
 }
 
-class SmartBulb implements DeviceData {
-  type: "bulb";
-  id: string;
-  name: string;
-  connectionState: DeviceConnectionStates;
+/* SmartDevice classes extending base DeviceData class, each has their own fields
+   and custom GetFields method
+*/
+
+class SmartBulb extends DeviceData {
+  
   isTurnedOn: boolean;
   brightness: number;
   color: string;
@@ -19,10 +31,8 @@ class SmartBulb implements DeviceData {
   constructor(
     type: "bulb", params: SmartBulbParams
   ) {
-    this.type = type;
-    this.id = params[0];
-    this.name = params[1];
-    this.connectionState = params[2];
+    super(type, params.slice(0,3) as DeviceParams);
+
     this.isTurnedOn = params[3];
     this.brightness = params[4];
     this.color = params[5];
@@ -41,21 +51,16 @@ class SmartBulb implements DeviceData {
   }
 }
 
-class SmartOutlet implements DeviceData {
-  type: "outlet";
-  id: string;
-  name: string;
-  connectionState: DeviceConnectionStates;
+class SmartOutlet extends DeviceData {
+
   isTurnedOn: boolean;
   powerConsumption: number;
 
   constructor(
     type: "outlet", params: SmartOutletParams
   ) {
-    this.type = type;
-    this.id = params[0];
-    this.name = params[1];
-    this.connectionState = params[2];
+    super(type, params.slice(0,3) as DeviceParams);
+
     this.isTurnedOn = params[3];
     this.powerConsumption = params[4];
   }
@@ -73,20 +78,15 @@ class SmartOutlet implements DeviceData {
   }
 }
 
-class SmartTemperatureSensor implements DeviceData {
-  type: "temperatureSensor";
-  id: string;
-  name: string;
-  connectionState: DeviceConnectionStates;
+class SmartTemperatureSensor extends DeviceData {
+
   temperature: number;
 
   constructor(
     type: "temperatureSensor", params: SmartTemperatureSensorParams
   ) {
-    this.type = type;
-    this.id = params[0];
-    this.name = params[1];
-    this.connectionState = params[2];
+    super(type, params.slice(0,3) as DeviceParams);
+    
     this.temperature = params[3];
   }
 
@@ -101,6 +101,14 @@ class SmartTemperatureSensor implements DeviceData {
     ];
   }
 }
+
+/* Helper types to determine fields for arguments */
+
+type DeviceParams = [
+    id: string,
+  name: string,
+  connectionState: DeviceConnectionStates
+]
 
 type SmartBulbParams = [
     id: string,
@@ -129,9 +137,13 @@ type SmartTemperatureSensorParams = [
 
 type DeviceTypes = "bulb" | "outlet" | "temperatureSensor";
 type DeviceConnectionStates = "connected" | "disconnected" | "poorConnection";
-
-export type SmartDevice = SmartBulb | SmartOutlet | SmartTemperatureSensor;
 type SmartDeviceParams = SmartBulbParams | SmartOutletParams | SmartTemperatureSensorParams;
+
+
+/* Type used outside for passing objects to components */
+export type SmartDevice = SmartBulb | SmartOutlet | SmartTemperatureSensor;
+
+/* These functions return apropriate SmartDevice based on the type passed */
 
 export function returnDeviceObject(type:"bulb", ...args: SmartBulbParams): SmartBulb;
 export function returnDeviceObject(type:"outlet", ...args: SmartOutletParams): SmartOutlet;
