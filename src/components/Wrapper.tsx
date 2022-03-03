@@ -9,15 +9,10 @@ export default function Wrapper()
 {
     const [deviceClicked, setDeviceClicked] = useState<SmartDevice>(null);
 
-    useEffect(()=>{
-        console.dir(deviceClicked);
-    },[deviceClicked])
-
     return(
         <>
-        <DeviceList setDeviceClicked= {setDeviceClicked}/>
+        <DeviceList deviceClicked={deviceClicked} setDeviceClicked= {setDeviceClicked}/>
         <DeviceWindow device={deviceClicked}/>
-
         </>
     );
 }

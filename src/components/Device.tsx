@@ -9,12 +9,24 @@ interface DeviceProps {
 export default function Device(deviceProps: DeviceProps) {
   const { device, setDeviceClicked } = deviceProps;
 
+    function fetchDevice()
+    {
+        fetch(`https://api.com/devices/${device.id}`, {method: "GET"}).then((result) => {
+            
+            return result.json()
+        }).then((data)=>{
+            
+           
+        });
+    }
+
   return (
     <>
       <div
         className="device-wrapper"
         onClick={(e) => {
           setDeviceClicked(device);
+          fetchDevice();
         }}
       >
         {device &&

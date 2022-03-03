@@ -1,53 +1,59 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import Device from "./Device";
-import { returnDeviceObject, SmartDevice } from '../interfaces/DeviceInterfaces';
+import {
+  returnDeviceObject,
+  SmartDevice,
+} from "../interfaces/DeviceInterfaces";
 
 interface DeviceListProps {
+  deviceClicked: SmartDevice;
   setDeviceClicked: Dispatch<SetStateAction<SmartDevice>>;
 }
 
 export default function DeviceList(deviceListProps: DeviceListProps) {
-  const [devices, setDevices] = useState<SmartDevice[]>([returnDeviceObject("outlet", "d", "d", "connected", true, 3),
-  returnDeviceObject("bulb", "Lightbulb", "dummyID", "connected", true, 3, "yellow"),
-  returnDeviceObject("temperatureSensor", "Sensor", "dummyID", "connected", 20)
-   /* {
-      name: "Lightbulb",
-      id: "dummyID",
-      type: "bulb",
-      connectionState: "connected",
-      isTurnedOn: true,
-      brightness: 3,
-      color: "yellow",
-      
-    },
-    {
-      name: "Outlet",
-      id: "dummyID",
-      type: "outlet",
-      connectionState: "connected",
-      isTurnedOn: false,
-      powerConsumption: 30,
-    },
-    {
-      name: "Sensor",
-      id: "dummyID",
-      type: "temperatureSensor",
-      connectionState: "connected",
-      temperature: 20,
-    },*/
-  ]);
+  const [devices, setDevices] = useState<SmartDevice[]>();
+
+  let { deviceClicked, setDeviceClicked } = deviceListProps;
+
+  useEffect(() => {
+    setInterval(() => {
+      fetch("https://api.com/devices", { method: "GET" })
+        .then((result) => {
+          return result.json();
+        })
+        .then((data) => {
+          let fetchedDevices: SmartDevice[] = [];
+
+          for (let device of data) {
+            let values = Object.values(device);
+            fetchedDevices.push(
+              returnDeviceObject(values[0] as any, values.slice(1) as any)
+            );
+          }
+          setDevices(fetchedDevices);
+        });
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+      if(devices && deviceClicked)
+      {
+          setDeviceClicked(devices.filter(device => device.id === deviceClicked.id)[0]);
+      }
+  }, [devices]);
 
   return (
     <>
-      {devices.map((device, index) => {
-        return (
-          <Device
-            device={device}
-            setDeviceClicked={deviceListProps.setDeviceClicked}
-            key={index}
-          />
-        );
-      })}
+      {devices &&
+        devices.map((device, index) => {
+          return (
+            <Device
+              device={device}
+              setDeviceClicked={deviceListProps.setDeviceClicked}
+              key={index}
+            />
+          );
+        })}
     </>
   );
 }

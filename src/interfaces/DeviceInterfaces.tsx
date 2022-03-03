@@ -73,7 +73,7 @@ class SmartOutlet extends DeviceData {
       ["Name", this.name],
       ["Connection State", this.connectionState],
       ["Turned On", this.isTurnedOn.toString()],
-      ["Brightness", this.powerConsumption.toString()],
+      ["Power Consumption", this.powerConsumption.toString()],
     ];
   }
 }
@@ -93,7 +93,7 @@ class SmartTemperatureSensor extends DeviceData {
 
   getFields(): string[][] {
     return [
-      ["Type", "Bulb"],
+      ["Type", "Temperature Sensor"],
       ["ID", this.id],
       ["Name", this.name],
       ["Connection State", this.connectionState],
@@ -145,10 +145,10 @@ export type SmartDevice = SmartBulb | SmartOutlet | SmartTemperatureSensor;
 
 /* These functions return apropriate SmartDevice based on the type passed */
 
-export function returnDeviceObject(type:"bulb", ...args: SmartBulbParams): SmartBulb;
-export function returnDeviceObject(type:"outlet", ...args: SmartOutletParams): SmartOutlet;
-export function returnDeviceObject(type:"temperatureSensor", ...args: SmartTemperatureSensorParams): SmartTemperatureSensor;
-export function returnDeviceObject(type: DeviceTypes, ...args: SmartDeviceParams) {
+export function returnDeviceObject(type:"bulb", args: SmartBulbParams): SmartBulb;
+export function returnDeviceObject(type:"outlet", args: SmartOutletParams): SmartOutlet;
+export function returnDeviceObject(type:"temperatureSensor", args: SmartTemperatureSensorParams): SmartTemperatureSensor;
+export function returnDeviceObject(type: DeviceTypes, args: SmartDeviceParams) {
   switch (type) {
     case "bulb":
       return new SmartBulb(type, args as SmartBulbParams);
