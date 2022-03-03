@@ -1,25 +1,31 @@
 import { Dispatch, SetStateAction } from "react";
+import { SmartDevice } from "../interfaces/DeviceInterfaces";
 
 interface DeviceProps {
-    device: SmartDevice,
-    setDeviceClicked : Dispatch<SetStateAction<SmartDevice>>
+  device: SmartDevice;
+  setDeviceClicked: Dispatch<SetStateAction<SmartDevice>>;
 }
 
-export default function Device(deviceProps: DeviceProps){
+export default function Device(deviceProps: DeviceProps) {
+  const { device, setDeviceClicked } = deviceProps;
 
-    const {device, setDeviceClicked} = deviceProps;
-
-    return(
-        <>
-        <div className="device-wrapper" onClick={(e) => {
-            setDeviceClicked(device);
-        }}>
-            {
-                Object.entries(device).map((entry, index) => {
-                    return <p key={index}>{entry}</p>
-                })
-            }
-        </div>
-        </>
-    );
+  return (
+    <>
+      <div
+        className="device-wrapper"
+        onClick={(e) => {
+          setDeviceClicked(device);
+        }}
+      >
+        {device &&
+          device.getFields().map((entry, index) => {
+            return (
+              <p key={index}>
+                {entry[0]}: {entry[1]}
+              </p>
+            );
+          })}
+      </div>
+    </>
+  );
 }

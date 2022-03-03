@@ -1,9 +1,13 @@
 import interact from "interactjs";
 import { useEffect } from "react";
+import { SmartDevice } from "../interfaces/DeviceInterfaces";
 
-export default function DeviceWindow(device?: SmartDevice | {}) {
+export default function DeviceWindow(props?: {device: SmartDevice}) {
+
+    let {device} = props;
+
   useEffect(() => {
-
+    
     console.log("MOUNTED");
 
     interact(".device-window").draggable({
@@ -44,7 +48,8 @@ export default function DeviceWindow(device?: SmartDevice | {}) {
     });
   }, []);
 
-  return <div className="device-window">{Object.entries(device).map((entry, index) => {
+  return <div className="device-window">{device && device.getFields().map((entry, index) => {
       return <p key={index}>{entry[0]}: {entry[1]}</p>
-  })}</div>;
+  })}
+  </div>;
 }
