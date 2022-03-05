@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import Device from "./Device";
 import {
   returnDeviceObject,
-  SmartDevice,
+  SmartDevice
 } from "../interfaces/DeviceInterfaces";
 
 interface DeviceListProps {
@@ -16,7 +16,21 @@ export default function DeviceList(deviceListProps: DeviceListProps) {
   let { deviceClicked, setDeviceClicked } = deviceListProps;
 
   useEffect(() => {
-    setInterval(() => {
+
+    let connection = new WebSocket('ws://api.com/v1/refresh');
+    connection.onmessage = event => {
+        let data = JSON.parse(event.data);
+        let fetchedDevices: SmartDevice[] = [];
+
+          for (let device of data) {
+            let values = Object.values(device) ;
+            fetchedDevices.push(
+              returnDeviceObject(values[0] as any, values.slice(1) as any)
+            );
+          }
+          setDevices(fetchedDevices);
+    }
+    /*setInterval(() => {
       fetch("https://api.com/devices", { method: "GET" })
         .then((result) => {
           return result.json();
@@ -32,7 +46,8 @@ export default function DeviceList(deviceListProps: DeviceListProps) {
           }
           setDevices(fetchedDevices);
         });
-    }, 1000);
+    }, 1000);*/
+    return ()=>{connection.close()};
   }, []);
 
   useEffect(() => {
