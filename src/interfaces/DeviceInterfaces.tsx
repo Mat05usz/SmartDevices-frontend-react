@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* Base class for all SmartDevices */
-class DeviceData {
+export class DeviceData {
   type: DeviceTypes;
   id: string;
   name: string;
@@ -15,7 +15,11 @@ class DeviceData {
         this.connectionState = params[2];
     }
 
-  getFields(): string[][] {return};
+  getFields(callParent: boolean): string[][] {return(
+  [ ["Type", this.type[0].toUpperCase() + this.type.slice(1)],
+  ["ID", this.id],
+  ["Name", this.name],
+  ["Connection State", this.connectionState]])};
 }
 
 /* SmartDevice classes extending base DeviceData class, each has their own fields
@@ -38,7 +42,9 @@ class SmartBulb extends DeviceData {
     this.color = params[5];
   }
 
-  getFields() {
+  getFields(callParent: boolean) {
+    if(callParent)
+      return super.getFields(false);
     return [
       ["Type", "Bulb"],
       ["ID", this.id],
@@ -66,7 +72,9 @@ class SmartOutlet extends DeviceData {
   }
 
 
-  getFields(): string[][] {
+  getFields(callParent: boolean): string[][] {
+    if(callParent)
+      return super.getFields(false);
     return [
       ["Type", "Outlet"],
       ["ID", this.id],
@@ -91,7 +99,10 @@ class SmartTemperatureSensor extends DeviceData {
   }
 
 
-  getFields(): string[][] {
+  getFields(callParent: boolean): string[][] {
+    if(callParent)
+      return super.getFields(false);
+
     return [
       ["Type", "Temperature Sensor"],
       ["ID", this.id],

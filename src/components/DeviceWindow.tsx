@@ -36,7 +36,7 @@ export default function DeviceWindow(props?: {device: SmartDevice}) {
     });
   }, []);
 
-  return <div className="device-window">{device && device.getFields().map((entry, index) => {
+  return <div className="device-window">{device && device.getFields(false).map((entry, index) => {
       return <p key={index}>{entry[0]}: {entry[1]}</p>
   })}
   </div>;

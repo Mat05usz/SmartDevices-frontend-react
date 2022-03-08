@@ -1,7 +1,7 @@
 import fetchMock from "fetch-mock";
 import { getMockDevices, findByID } from './MockDevices';
 
-export default function setupMock() {
+export default function setupMockFetch() {
   fetchMock.get("https://api.com/devices", (url, opts) => {
       return getMockDevices();
   }, {

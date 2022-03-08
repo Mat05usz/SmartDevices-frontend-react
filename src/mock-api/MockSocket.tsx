@@ -8,7 +8,7 @@ export function setupMockSocketServer() {
     socket.on("message", (message) => {
       console.log("Message from client: ", message);
     });
-    socket.on("close", () => {});
+    socket.on("close", () => {console.log("Connection closed with: ", socket)});
 
     setInterval(() => {
       socket.send(JSON.stringify(getMockDevices()));

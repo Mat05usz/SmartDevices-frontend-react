@@ -24,6 +24,7 @@ export default function DeviceList(deviceListProps: DeviceListProps) {
 
           for (let device of data) {
             let values = Object.values(device) ;
+            
             fetchedDevices.push(
               returnDeviceObject(values[0] as any, values.slice(1) as any)
             );
