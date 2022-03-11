@@ -32,6 +32,16 @@ const deviceBackgroundColors: Record<DeviceTypes, string> = {
   temperatureSensor: "#f17e77",
 };
 
+/*
+
+  A probably overly complicated way to get SVGs based on the type of the device and a field
+  we want to provide an icon for.
+
+  It goes like this: deviceDecorators[**type** we want to access][type's **field** that we want to get specific SVG from]
+  in return we get a function that when called with proper parameter (like brightness or colour) returns a JSX with SVG
+
+*/
+
 const deviceDecorators: Record<
   DeviceTypes,
   | Record<"brightness" | "color", Function>
@@ -148,7 +158,11 @@ export default function Device(deviceProps: DeviceProps) {
                     <b>{entry[1]}</b>
                   </p>{entry[0] !== 'Turned On' &&
                   <div className="device-detail-decorator">
-                    {deviceDecorators[device.type][Object.keys(device)[index + 4]](entry[1])}
+                    {
+                      //Check comment above the definition to understand what it does
+                      //Object.keys(device)[index + 4] is an offset to get to fields that have SVG representation
+                      deviceDecorators[device.type][Object.keys(device)[index + 4]](entry[1])
+                    }
                   </div>}
                 </div>
               );
