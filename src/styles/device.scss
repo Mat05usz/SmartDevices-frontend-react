@@ -118,6 +118,24 @@
           transition: all 200ms ease;
           z-index: -1;
         }
+        .device-detail-temperature{
+          width: 5px;
+          height: 15px;
+          left: 9px;
+          bottom: 7px;
+          background-color: #B50000;
+          position: absolute;
+          z-index: -1;
+         // transform: rotate(180deg);
+        }
+        .device-detail-power{
+          position: absolute;
+          z-index: -1;
+          left: 4px;
+          top: 1px;
+          stroke: #EBEF1E;
+          fill: #EBEF1E;
+        }
       }
     }
 

@@ -14,7 +14,4 @@ export function setupMockSocketServer() {
       socket.send(JSON.stringify(getMockDevices()));
     }, 500);
   });
-  // console.log(mockServer.clients()); // array of all connected clients
-  // mockServer.emit('room', 'message');
-  //mockServer.stop();
 }

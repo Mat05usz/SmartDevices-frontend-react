@@ -5,8 +5,14 @@ import {
   SmartDevice,
 } from "../interfaces/DeviceInterfaces";
 import "../styles/device.scss";
-
+//@ts-ignore
 import { ReactComponent as BulbSVG } from "../svg/bulb.svg";
+//@ts-ignore
+import { ReactComponent as TemperatureSVG } from "../svg/temperature.svg";
+//@ts-ignore
+import { ReactComponent as LightningSVG } from "../svg/lightning.svg";
+//@ts-ignore
+import { LightningInside } from "../svg/lightning-inside";
 
 interface DeviceProps {
   device: SmartDevice;
@@ -33,12 +39,12 @@ const deviceDecorators: Record<
   | Record<
       "temperature",
       Function
-    > /*{getBrightness: Function, getColor: Function}*/
+    >
 > = {
   bulb: {
     brightness: (brightness) => {return(
       <>
-        <BulbSVG width="18" height="25" />
+        <BulbSVG width="19" height="26" />
         <span
           className="device-detail-bulb"
           style={{
@@ -50,7 +56,7 @@ const deviceDecorators: Record<
     },
     color: (color) => { return(
       <>
-        <BulbSVG width="18" height="25" />
+        <BulbSVG width="19" height="26" />
         <span
           className="device-detail-bulb"
           style={{
@@ -61,23 +67,38 @@ const deviceDecorators: Record<
     },
   },
   outlet: {
-    powerConsumption: (powerConsumption) => {},
+    powerConsumption: (powerConsumption) => { return(
+      <>
+        <LightningSVG width="24" height="24" />
+        <LightningInside opacity={powerConsumption / 100}/>
+      </>);
+    },
   },
   temperatureSensor: {
-    temperature: (temperature) => {},
+    temperature: (temperature) => { return(
+      <>
+        <TemperatureSVG width="24" height="24" />
+        <span
+          className="device-detail-temperature"
+          style={{
+            height: temperature / 4,
+          }}
+        ></span>
+      </>);
+    },
   },
 };
 
 export default function Device(deviceProps: DeviceProps) {
   const { device, setDeviceClicked, showDetailed } = deviceProps;
 
-  function fetchDevice() {
+  /*function fetchDevice() {
     fetch(`https://api.com/devices/${device.id}`, { method: "GET" })
       .then((result) => {
         return result.json();
       })
       .then((data) => {});
-  }
+  }*/
 
   function setupDeviceLayout() {
     let fields = device.getFields();
@@ -127,7 +148,6 @@ export default function Device(deviceProps: DeviceProps) {
                     <b>{entry[1]}</b>
                   </p>{entry[0] !== 'Turned On' &&
                   <div className="device-detail-decorator">
-                
                     {deviceDecorators[device.type][Object.keys(device)[index + 4]](entry[1])}
                   </div>}
                 </div>
@@ -144,7 +164,7 @@ export default function Device(deviceProps: DeviceProps) {
         className="device-wrapper"
         onClick={(e) => {
           if (setDeviceClicked) setDeviceClicked(device);
-          fetchDevice();
+          //fetchDevice();
         }}
       >
         {device && setupDeviceLayout()}

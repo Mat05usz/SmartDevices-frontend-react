@@ -15,7 +15,15 @@ export function getMockDevices()
         connectionState: `${Math.floor(Math.random() * 100) > 20 ? 'connected' : `${Math.floor(Math.random() * 100) > 20 ? 'poorConnection' : 'disconnected'}`}`,
         isTurnedOn: true,
         brightness: Math.floor(Math.random() * 10),
-        color: `#${Math.floor(Math.random() * 99)}FF00`,
+        color: `${(() => {
+          let color = '#';
+          for (let i = 0; i < 6; i++){
+             const random = Math.random();
+             const bit = (random * 16) | 0;
+             color += (bit).toString(16);
+          };
+          return color;
+       })()}`,
       },
       {
         type: "outlet",
@@ -46,7 +54,15 @@ export function getMockDevices()
         connectionState: `${Math.floor(Math.random() * 100) > 20 ? 'connected' : 'poorConnection'}`,
         isTurnedOn: true,
         brightness: Math.floor(Math.random() * 10),
-        color: `#${Math.floor(Math.random() * 89) + 10}FF00`,
+        color: `${(() => {
+          let color = '#';
+          for (let i = 0; i < 6; i++){
+             const random = Math.random();
+             const bit = (random * 16) | 0;
+             color += (bit).toString(16);
+          };
+          return color;
+       })()}`,
       }
     ];
 
