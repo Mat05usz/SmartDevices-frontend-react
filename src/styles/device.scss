@@ -1,0 +1,130 @@
+.device-wrapper {
+  width: min(290px, 100vw);
+  box-shadow: 0px 2px 4px -2px black;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 60px;
+  place-items: center;
+  row-gap: 2rem;
+  padding: 1rem 0.5rem;
+  background-color: white;
+  cursor: pointer;
+
+
+  
+
+
+  .device-name,
+  .device-status {
+    grid-column-start: span 2;
+  }
+
+  .device-id,
+  .device-type {
+    padding: 0.25rem 0.5rem;
+    position: relative;
+    z-index: 5;
+    font-size: 12px;
+    width: min-content;
+    text-align: center;
+    .coloured-background {
+      position: absolute;
+      width: 105%;
+      top: 50%;
+      left: 50%;
+      background-color: #ffffff;
+      height: 105%;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .device-name {
+    font-size: 32px;
+  }
+  .device-status {
+    font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    place-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    .device-status-title {
+      text-align: center;
+      flex-basis: 100%;
+      color: #5f5f5f;
+    }
+    .device-status-state {
+      flex-basis: 170px;
+      text-align: end;
+    }
+    .status-dot-container {
+      flex-basis: 100px;
+      display: flex;
+      padding-left: 1rem;
+      .device-status-dot {
+        padding-left: 0.5rem;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        display: inline-block;
+        transition: all 200ms ease;
+      }
+    }
+  }
+  .device-details {
+    grid-column-start: span 2;
+    width: 100%;
+    display: flex;
+    place-items: center;
+    column-gap: 1rem;
+    row-gap: 1.5rem;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    .device-detail-title {
+      color: #5f5f5f;
+    }
+
+    .device-detail {
+      display: flex;
+      flex-wrap: wrap;
+      place-items: center;
+      justify-content: center;
+      width: 100%;
+      .device-detail-title{
+        flex-basis: 100%;
+      }
+      .device-detail-value{
+        flex-basis: 50%;
+      }
+      .device-detail-decorator{
+        display: flex;
+        place-items: center;
+        flex-basis: 25%;
+        position: relative;
+        z-index: 2;
+        .device-detail-bulb {
+          height: 15px;
+          width: 16px;
+          border-radius: 50%;
+          top: 2px;
+          left: 1px;
+          display: inline-block;
+          position: absolute;
+          transition: all 200ms ease;
+          z-index: -1;
+        }
+      }
+    }
+
+    & > * {
+      width: max-content;
+      text-align: center;
+      flex-basis: 150px;
+    }
+  }
+}

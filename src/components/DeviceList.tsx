@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useState, useEffect } from "react";
+import '../styles/devicelist.scss';
 import Device from "./Device";
 import {
   returnDeviceObject,
-  SmartDevice
+  SmartDevice, 
 } from "../interfaces/DeviceInterfaces";
 
 interface DeviceListProps {
@@ -55,21 +56,23 @@ export default function DeviceList(deviceListProps: DeviceListProps) {
       if(devices && deviceClicked)
       {
           setDeviceClicked(devices.filter(device => device.id === deviceClicked.id)[0]);
+          
       }
   }, [devices]);
 
   return (
-    <>
+    <div className="device-list">
       {devices &&
         devices.map((device, index) => {
           return (
             <Device
               device={device}
               setDeviceClicked={deviceListProps.setDeviceClicked}
+              showDetailed={false}
               key={index}
             />
           );
         })}
-    </>
+    </div>
   );
 }

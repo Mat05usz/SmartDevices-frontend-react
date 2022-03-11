@@ -15,11 +15,11 @@ export class DeviceData {
         this.connectionState = params[2];
     }
 
-  getFields(callParent: boolean): string[][] {return(
+  getFields(): string[][] {return(
   [ ["Type", this.type[0].toUpperCase() + this.type.slice(1)],
   ["ID", this.id],
   ["Name", this.name],
-  ["Connection State", this.connectionState]])};
+  ["Status", this.connectionState]])};
 }
 
 /* SmartDevice classes extending base DeviceData class, each has their own fields
@@ -42,14 +42,12 @@ class SmartBulb extends DeviceData {
     this.color = params[5];
   }
 
-  getFields(callParent: boolean) {
-    if(callParent)
-      return super.getFields(false);
+  getFields() {
     return [
       ["Type", "Bulb"],
       ["ID", this.id],
       ["Name", this.name],
-      ["Connection State", this.connectionState],
+      ["Status", connectionStatesStringified[this.connectionState]],
       ["Turned On", this.isTurnedOn.toString()],
       ["Brightness", this.brightness.toString()],
       ["Color", this.color],
@@ -72,14 +70,12 @@ class SmartOutlet extends DeviceData {
   }
 
 
-  getFields(callParent: boolean): string[][] {
-    if(callParent)
-      return super.getFields(false);
+  getFields(): string[][] {
     return [
       ["Type", "Outlet"],
       ["ID", this.id],
       ["Name", this.name],
-      ["Connection State", this.connectionState],
+      ["Status", connectionStatesStringified[this.connectionState]],
       ["Turned On", this.isTurnedOn.toString()],
       ["Power Consumption", this.powerConsumption.toString()],
     ];
@@ -99,15 +95,12 @@ class SmartTemperatureSensor extends DeviceData {
   }
 
 
-  getFields(callParent: boolean): string[][] {
-    if(callParent)
-      return super.getFields(false);
-
+  getFields(): string[][] {
     return [
       ["Type", "Temperature Sensor"],
       ["ID", this.id],
       ["Name", this.name],
-      ["Connection State", this.connectionState],
+      ["Status", connectionStatesStringified[this.connectionState]],
       ["Temperature", this.temperature.toString()],
     ];
   }
@@ -145,11 +138,15 @@ type SmartTemperatureSensorParams = [
   temperature: number
 ]
 
-
-type DeviceTypes = "bulb" | "outlet" | "temperatureSensor";
-type DeviceConnectionStates = "connected" | "disconnected" | "poorConnection";
+export type DeviceTypes = "bulb" | "outlet" | "temperatureSensor";
+export type DeviceConnectionStates = "connected" | "disconnected" | "poorConnection";
 type SmartDeviceParams = SmartBulbParams | SmartOutletParams | SmartTemperatureSensorParams;
 
+let connectionStatesStringified: Record<DeviceConnectionStates, string> = {
+  connected: "Connected",
+  disconnected: "Disconnected",
+  poorConnection: "Poor Connection"
+}
 
 /* Type used outside for passing objects to components */
 export type SmartDevice = SmartBulb | SmartOutlet | SmartTemperatureSensor;
