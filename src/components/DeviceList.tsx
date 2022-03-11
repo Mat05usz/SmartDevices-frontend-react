@@ -52,11 +52,16 @@ export default function DeviceList(deviceListProps: DeviceListProps) {
     return ()=>{connection.close()};
   }, []);
 
+
+  /*
+    Since all devices have unique IDs, easiest way to update the specific clicked device
+    is to filter the list of all devices and pick the one which ID matches the clicked one's.
+  */
+
   useEffect(() => {
       if(devices && deviceClicked)
       {
           setDeviceClicked(devices.filter(device => device.id === deviceClicked.id)[0]);
-          
       }
   }, [devices]);
 

@@ -6,6 +6,12 @@ export function findByID(id: string)
     
 }
 
+/*
+  A bunch of devices that get randomized fields every function call to simulate
+  real life behaviour. By default the web socket 'server' creates new data every 500ms.
+*/
+
+
 export function getMockDevices()
 {
     let mockDevices = [{
