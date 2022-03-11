@@ -1,5 +1,5 @@
 import interact from "interactjs";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef } from "react";
 import { SmartDevice } from "../interfaces/DeviceInterfaces";
 import Device from "./Device";
 import "../styles/devicewindow.scss";
@@ -80,7 +80,7 @@ export default function DeviceWindow(props?: {
     it's its first appearance. 
   */
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (device && !wasClickedBefore.current) {
       let deviceWindow = document.querySelector(
         ".device-window"
