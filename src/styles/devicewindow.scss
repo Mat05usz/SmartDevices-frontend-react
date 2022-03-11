@@ -20,5 +20,7 @@
     .device-wrapper{
         width: 100%;
         cursor:inherit;
+        height: 100%;
+        overflow-y: hidden;
     }
   }

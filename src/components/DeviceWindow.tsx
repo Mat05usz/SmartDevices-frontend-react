@@ -1,5 +1,5 @@
 import interact from "interactjs";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { SmartDevice } from "../interfaces/DeviceInterfaces";
 import Device from "./Device";
 import "../styles/devicewindow.scss";
@@ -10,12 +10,7 @@ export default function DeviceWindow(props?: {
 }) {
   let { device, setDeviceClicked } = props;
   
-  useEffect(() => {
-
-    let deviceDiv = document.querySelector('.device-window') as HTMLDivElement;
-    //deviceDiv.style.left = document.get
-   
-
+  useEffect(() => {   
     interact(".device-window").draggable({
       inertia: true,
        modifiers: [
@@ -57,7 +52,7 @@ export default function DeviceWindow(props?: {
           // translate when resizing from top or left edges
           x += event.deltaRect.left
           y += event.deltaRect.top
-  
+
           target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
   
           target.setAttribute('data-x', x)
@@ -65,11 +60,9 @@ export default function DeviceWindow(props?: {
         }
       },
       modifiers: [
-       
-        // minimum size
         interact.modifiers.restrictSize({
           min: { width: 300, height: 400 },
-          max: {width: 600, height: 1000}
+          max: {width: 600, height: 600}
         })
       ],
   

@@ -1,6 +1,6 @@
 import DeviceList from "./DeviceList";
 import DeviceWindow from "./DeviceWindow";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SmartDevice } from "../interfaces/DeviceInterfaces";
 import '../styles/wrapper.scss';
 
